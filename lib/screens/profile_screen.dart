@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:logiology_task/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/profile_controller.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,6 +19,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   bool _isPasswordObscure = true;
+
+  // Initialize the username and password from the controller
+  @override
+  void initState() {
+    super.initState();
+    // Only set text once when initializing the screen
+    usernameController.text = controller.username.value;
+    passwordController.text = controller.password.value;
+  }
 
   // Save username and password to SharedPreferences
   void saveCredentials(String username, String password) async {
@@ -67,10 +76,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Sync username and password from the controller to the text fields
-    usernameController.text = controller.username.value;
-    passwordController.text = controller.password.value;
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Profile"),
